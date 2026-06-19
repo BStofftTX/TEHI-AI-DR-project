@@ -128,7 +128,7 @@ The longer-term goal is a smartphone app called TEHI (The Eyes Have It) that let
 
 ```bash
 conda activate bruce
-code dr_exploration_efficientnet.ipynb
+code v1_efficientnet.ipynb
 ```
 
 Pick the `Python (bruce)` kernel and run all cells in order.
