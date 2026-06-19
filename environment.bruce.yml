@@ -1,0 +1,18 @@
+name: bruce
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - ipykernel
+      - jupyterlab
+      - numpy
+      - pandas
+      - matplotlib
+      - seaborn
+      - scikit-learn
+      - pillow
+      - tensorflow-macos==2.16.2
+      - tensorflow-metal==1.2.0
