@@ -4,7 +4,7 @@ This project uses fundus (retinal) images to classify diabetic retinopathy sever
 
 ## What's in Here
 
-The main notebook (`dr_exploration_efficientnet.ipynb`) walks through the full pipeline:
+The main notebook (`v1_efficientnet.ipynb`) walks through the full pipeline:
 
 1. Explore the train/validation image folders and check class balance.
 2. Build image loading and augmentation pipelines.
