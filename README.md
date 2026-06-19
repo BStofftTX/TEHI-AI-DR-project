@@ -50,7 +50,7 @@ python -c "import tensorflow as tf, seaborn as sns, pandas as pd; print(tf.__ver
 
 ## Opening the Notebook in VS Code
 
-1. Open `dr_exploration_efficientnet.ipynb`.
+1. Open `v1_efficientnet.ipynb`.
 2. Click the kernel name in the top-right corner of the notebook.
 3. Choose `Python (bruce)`.
 4. Run cells top to bottom.
