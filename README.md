@@ -4,6 +4,3 @@ Collaborative space to further the models and algorithms using fundus imagery of
 ## Neural Net Design
 ## device
 ## mobile app (Flutter)
-
-# dataset:
-## https://www.kaggle.com/datasets/vuppalaadithyasairam/fundus-images-for-diabetic-retinopathy
