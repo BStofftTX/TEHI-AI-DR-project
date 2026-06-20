@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: tehi-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tehi
+    username: tehi
+    password: tehi
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: localhost
+    port: 1025
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  jwt:
+    # Base64-encoded key, replace in real env
+    secret: YjFhNWY3MjVlMjZjY2EyYzUyMjZiN2IyYzIyMTQ4MjU2ZjU4ZDQ3ZDZmM2Y0MjJmN2I4M2Y0YWE2YjI2ZjQ3NA==
+    expiration-ms: 86400000
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:}
+  api-key: ${CLOUDINARY_API_KEY:}
+  api-secret: ${CLOUDINARY_API_SECRET:}
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:}
+  auth-token: ${TWILIO_AUTH_TOKEN:}
+  from-phone: ${TWILIO_FROM_PHONE:}
+
+inference:
+  base-url: ${INFERENCE_BASE_URL:http://localhost:8001}
+  predict-path: ${INFERENCE_PREDICT_PATH:/predict}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

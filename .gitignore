@@ -1,4 +1,52 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.code-workspace
+
+# Python and notebooks
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+*.ipynb_checksum
+
+# Local environments and secrets
+.env
+.env.*
+.venv/
+env/
+venv/
+ENV/
+
+# Repo data and generated outputs
 data/
 artifacts/
 details/
-.DS_Store
+model/data/
+model/artifacts/
+
+# Flutter and Dart generated files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub/
+.pub-cache/
+build/
+**/build/
+.gradle/
+GeneratedPluginRegistrant.*
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*~

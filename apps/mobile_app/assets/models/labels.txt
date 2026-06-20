@@ -1,0 +1,5 @@
+Mild
+Moderate
+Normal
+Proliferate
+Severe
