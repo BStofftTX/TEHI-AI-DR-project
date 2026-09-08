@@ -95,6 +95,23 @@ ARCHITECTURE.md
 6. Add calibration, confidence reporting, and clinician-facing review workflow
 7. Add audit logging, security, privacy, and deployment hardening
 
+## Original 2022 AI Research
+
+TEHI grew from graduate computer-vision research using retinal fundus imagery for five-class diabetic retinopathy classification.
+
+Recovered research artifacts include:
+
+- ImageNet-pretrained **Inception v3** and **VGG19** transfer-learning experiments
+- TensorFlow/Keras and Jupyter notebooks
+- 224×224 fundus-image preprocessing and data augmentation
+- five-class DR classification from No DR through Proliferative DR
+- confusion-matrix evaluation and saved TensorFlow/Keras models
+- historical validation accuracy reaching **74.38%** for the recovered Inception v3 run and **76.88%** for the recovered VGG19 run
+
+The original notebooks, selected results, methodology, limitations, and historical context are preserved under [`research/2022-dr/`](research/2022-dr/).
+
+These historical experimental results are research artifacts and **not clinically validated diagnostic performance**.
+
 ## Source basis
 
 This MVP is based on the concept and research direction in:
