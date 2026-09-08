@@ -22,7 +22,7 @@ This prototype is **not a medical diagnostic tool** and must not be used to diag
 
 ## Why a stub model
 
-The original repository currently contains project papers and concept documents, but no production model weights, no training artifacts, and no app code. This MVP therefore uses a deterministic stub inference layer so the product workflow can be built and tested now, while preserving a clean path for real model integration later.
+The repository now preserves original 2022 training notebooks and selected experimental results, but does not include production-ready model weights or a clinically validated inference pipeline. The 2026 MVP therefore uses a deterministic stub inference layer so the product workflow can be built and tested while preserving a clean path for future validated model integration.
 
 ## MVP outputs
 
