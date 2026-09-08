@@ -1,6 +1,7 @@
 # TEHI MVP
 
-TEHI (The Eyes Have It) is a screening prototype inspired by the USD research documents in this repository. This MVP is designed as a smartphone-first/web-first prototype for:
+**TEHI (The Eyes Have It)** is an independent medical-imaging AI research and product-development project conceived and led by **William Bruce Stofft** and developed under **MacroStofft LLC**. TEHI grew from Stofft's graduate research in artificial intelligence at the University of South Dakota and is now being pursued independently as a potential commercial platform.
+The current MVP is a smartphone-first/web-first software prototype exploring:
 
 - 5-class diabetic retinopathy screening from fundus images
 - binary cardiovascular risk screening from fundus images
