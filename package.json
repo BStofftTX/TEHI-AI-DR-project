@@ -1,0 +1,15 @@
+{
+  "name": "tehi-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TEHI MVP screening prototype for diabetic retinopathy and cardiovascular risk from fundus images.",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
