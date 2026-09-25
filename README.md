@@ -1,120 +1,151 @@
-# TEHI MVP
+# TEHI — The Eyes Have It
 
-**TEHI (The Eyes Have It)** is an independent medical-imaging AI research and product-development project conceived and led by **William Bruce Stofft** and developed under **MacroStofft LLC**. TEHI grew from Stofft's graduate research in artificial intelligence at the University of South Dakota and is now being pursued independently as a potential commercial platform.
-The current MVP is a smartphone-first/web-first software prototype exploring:
+[![CI](https://github.com/BStofftTX/TEHI-AI-DR-project/actions/workflows/ci.yml/badge.svg)](https://github.com/BStofftTX/TEHI-AI-DR-project/actions/workflows/ci.yml)
+[![Node.js 20+](https://img.shields.io/badge/Node.js-20%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Status: Research MVP](https://img.shields.io/badge/status-research%20MVP-blue)](#project-status)
 
-- 5-class diabetic retinopathy screening from fundus images
-- binary cardiovascular risk screening from fundus images
+**TEHI (The Eyes Have It)** is a medical-imaging AI research and product-development project exploring retinal fundus photography as a screening input for diabetic retinopathy and cardiovascular risk.
 
-## Important disclaimer
+The project was conceived and is led by **W. Bruce Stofft** through **MacroStofft LLC**, building on his graduate research in artificial intelligence at the University of South Dakota.
 
-This prototype is **not a medical diagnostic tool** and must not be used to diagnose, treat, or replace clinician judgment. It is a software MVP intended to demonstrate product flow, inference integration points, and testing structure.
+> [!IMPORTANT]
+> TEHI is a research MVP—not a medical device or diagnostic system. The current public prototype uses deterministic stub inference and must not be used for clinical decisions.
 
-## What is included
+## Project status
 
-- a small Node.js web server
-- a more realistic mobile-first TEHI landing experience
-- camera-or-gallery upload UX for smartphone workflow
-- a stub inference pipeline for DR + CVD screening
-- clear integration points for future real TensorFlow Lite model weights
-- runnable tests
-- architecture notes
+The repository currently demonstrates the end-to-end product workflow around an intentionally replaceable inference layer. It does **not** contain validated production models, clinical performance claims, or deployable medical-device software.
 
-## Why a stub model
+| Capability | Current state |
+| --- | --- |
+| Smartphone-first fundus-image upload flow | Implemented |
+| Five-class diabetic retinopathy result schema | Implemented with stub inference |
+| Binary cardiovascular-risk result schema | Implemented with stub inference |
+| Replaceable model-adapter architecture | Implemented |
+| Automated application and route tests | Implemented |
+| Validated model weights and preprocessing | Planned |
+| Clinical validation and regulatory readiness | Future work |
 
-The repository now preserves original 2022 training notebooks and selected experimental results, but does not include production-ready model weights or a clinically validated inference pipeline. The 2026 MVP therefore uses a deterministic stub inference layer so the product workflow can be built and tested while preserving a clean path for future validated model integration.
+## Why this project matters
 
-## MVP outputs
+Retinal images may contain clinically useful signals beyond eye disease. TEHI investigates how a carefully validated screening workflow could help clinicians identify patients who may need additional review while keeping human oversight, model traceability, privacy, and safety central to the system design.
 
-### Diabetic retinopathy classes
-- 0: No DR detected
-- 1: Mild DR
-- 2: Moderate DR
-- 3: Severe DR
-- 4: Proliferative DR
+The repository preserves original 2022 training notebooks and selected experimental results, but does not contain production-ready model weights or a clinically validated inference pipeline. The 2026 MVP therefore uses deterministic stub inference while retaining a clean path for future validated model integration.
 
-### Cardiovascular screening output
-- 0: CVD unlikely
-- 1: CVD likely
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Fundus image upload] --> B[Image summary]
+    B --> C[Screening engine]
+    C --> D{Model adapter}
+    D --> E[Deterministic stub<br/>current MVP]
+    D -. future .-> F[Versioned TFLite models]
+    E --> G[DR + CVD result schema]
+    F --> G
+    G --> H[Prototype review screen]
+```
+
+The adapter boundary lets the interface, routing, result schema, and safety messaging be tested without presenting placeholder output as medical inference. See [ARCHITECTURE.md](ARCHITECTURE.md) for the component-level design.
+
+## Technical highlights
+
+- Dependency-light Node.js HTTP application
+- Mobile-first image capture and upload experience
+- Separate presentation, application, and inference layers
+- Pluggable adapters for stub and future TensorFlow Lite inference
+- Deterministic outputs for repeatable prototype testing
+- Native Node.js test suite covering routes and screening schema
+- Explicit safety language throughout the user flow
 
 ## Run locally
 
-Requirements:
-- Node.js 20+
+### Requirements
 
-Start the app:
+- Node.js 20 or newer
+
+### Start the application
 
 ```bash
 npm run dev
 ```
 
-Open:
+Then open [http://localhost:3000](http://localhost:3000).
 
-```text
-http://localhost:3000
-```
-
-## Run tests
+### Run the tests
 
 ```bash
 npm test
 ```
 
-## Project structure
+No model files or third-party runtime dependencies are required for the current stub-based MVP.
+
+## Repository structure
 
 ```text
 src/
   server.js                # HTTP server
-  routes.js                # route handlers
+  routes.js                # request routing
   inference/
-    screeningEngine.js     # orchestration for screening outputs
+    screeningEngine.js     # output orchestration
     stubModel.js           # deterministic placeholder inference
-    modelRegistry.js       # model artifact planning and registry info
+    modelRegistry.js       # planned model artifacts
     adapters/
-      stubAdapter.js       # current active adapter
-      tfliteAdapter.js     # future TensorFlow Lite adapter seam
+      stubAdapter.js       # active MVP adapter
+      tfliteAdapter.js     # future production adapter seam
   utils/
-    imageSummary.js        # lightweight image metadata summarizer
-  views/
-    landingPage.js         # mobile-first landing UI
-    resultPage.js          # result UI renderer
-    integrationPage.js     # model integration readiness UI
-test/
-  screeningEngine.test.js
-  server.test.js
-ARCHITECTURE.md
+    imageSummary.js        # uploaded-image metadata summary
+  views/                   # landing, result, and integration UI
+test/                      # route and screening-engine tests
+research/2022-dr/          # original notebooks, results, and context
 ```
 
-## Next steps for real model integration
+## Development roadmap
 
-1. Add a real labeled fundus dataset pipeline
-2. Train or import DR classification weights
-3. Train or import CVD risk model weights
-4. Replace the active stub adapter with a real TensorFlow Lite adapter implementation
-5. Add image preprocessing consistent with model training
-6. Add calibration, confidence reporting, and clinician-facing review workflow
-7. Add audit logging, security, privacy, and deployment hardening
+The next engineering phase focuses on:
 
-## Original 2022 AI Research
+1. Establishing licensed, well-documented fundus-image datasets
+2. Creating reproducible preprocessing and data-partition pipelines
+3. Training and independently evaluating DR and CVD models
+4. Adding calibration, subgroup analysis, and external validation
+5. Versioning models, labels, and preprocessing metadata together
+6. Adding clinician review, audit logging, privacy, and security controls
+7. Defining regulatory and deployment requirements before field use
+
+See [ROADMAP.md](ROADMAP.md) for milestones and evidence gates.
+
+## Original 2022 AI research
 
 TEHI grew from graduate computer-vision research using retinal fundus imagery for five-class diabetic retinopathy classification.
 
-Recovered research artifacts include:
+Preserved research artifacts include:
 
 - ImageNet-pretrained **Inception v3** and **VGG19** transfer-learning experiments
 - TensorFlow/Keras and Jupyter notebooks
 - 224×224 fundus-image preprocessing and data augmentation
-- five-class DR classification from No DR through Proliferative DR
-- confusion-matrix evaluation and saved TensorFlow/Keras models
-- historical validation accuracy reaching **74.38%** for the recovered Inception v3 run and **76.88%** for the recovered VGG19 run
+- Five-class DR classification from No DR through Proliferative DR
+- Confusion-matrix evaluation and saved TensorFlow/Keras models
+- Historical validation accuracy of **74.38%** for the recovered Inception v3 run and **76.88%** for the recovered VGG19 run
 
-The original notebooks, selected results, methodology, limitations, and historical context are preserved under [`research/2022-dr/`](research/2022-dr/).
+The notebooks, selected results, methodology, limitations, and historical context are documented under [`research/2022-dr/`](research/2022-dr/).
 
 These historical experimental results are research artifacts and **not clinically validated diagnostic performance**.
 
-## Source basis
+## Research provenance
 
-This MVP is based on the concept and research direction in:
+The MVP follows the direction established in the project’s original concept and research materials:
+
 - `Vision final project idea.docx`
 - `Stofft DR paper.docx`
 - `Stofft-CVD Paper.docx`
+
+Project stewardship and prior contributions are documented in [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+## Contributing and security
+
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes.
+- Report security concerns using the process in [SECURITY.md](SECURITY.md).
+- Do not submit protected health information, private medical data, or unlicensed datasets.
+
+## Medical disclaimer
+
+This repository is for research and software-prototyping purposes only. It has not been clinically validated, cleared, or approved for diagnosis, treatment, triage, or patient management. Any future clinical use would require appropriate data governance, independent validation, clinician oversight, security controls, and regulatory review.

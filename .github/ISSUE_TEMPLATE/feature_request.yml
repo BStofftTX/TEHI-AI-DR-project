@@ -1,0 +1,31 @@
+name: Feature request
+description: Propose a focused improvement to TEHI
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Need
+      description: What user, research, or engineering problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Validation
+      description: How should the change be tested or evaluated?
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Safety, privacy, or data considerations
+      description: Note any medical, privacy, licensing, bias, or security concerns.
