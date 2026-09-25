@@ -1,0 +1,34 @@
+name: Bug report
+description: Report a reproducible problem in the TEHI research MVP
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include patient data, protected health information, credentials, or sensitive medical images.
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest reproducible sequence.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Node.js version, browser, and relevant commit.
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety or privacy impact
+      description: Describe any potential medical-safety, data, security, or privacy implications.
