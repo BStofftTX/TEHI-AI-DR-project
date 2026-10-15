@@ -54,6 +54,7 @@ The adapter boundary lets the interface, routing, result schema, and safety mess
 - Separate presentation, application, and inference layers
 - Pluggable adapters for stub and future TensorFlow Lite inference
 - Deterministic outputs for repeatable prototype testing
+- Upload requests are capped at 10 MiB, including requests without `Content-Length`
 - Native Node.js test suite covering routes and screening schema
 - Explicit safety language throughout the user flow
 

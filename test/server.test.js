@@ -70,6 +70,45 @@ test('POST /screen rejects an explicit unsupported upload type', async (t) => {
   assert.match(response.body, /role="alert"/);
 });
 
+test('POST /screen rejects a declared upload larger than 10 MiB with an accessible 413 error', async (t) => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  t.after(() => server.close());
+  const port = server.address().port;
+
+  const response = await requestResponse({
+    method: 'POST',
+    port,
+    path: '/screen',
+    headers: {
+      'content-length': 10 * 1024 * 1024 + 1,
+      'content-type': 'image/jpeg',
+    },
+  });
+
+  assert.equal(response.statusCode, 413);
+  assert.match(response.body, /<h1>Upload too large<\/h1>/);
+  assert.match(response.body, /no larger than 10 MiB/);
+  assert.match(response.body, /role="alert"/);
+});
+
+test('POST /screen enforces the 10 MiB limit when Content-Length is absent', async (t) => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  t.after(() => server.close());
+  const port = server.address().port;
+
+  const response = await requestResponse({
+    method: 'POST',
+    port,
+    path: '/screen',
+    headers: { 'content-type': 'image/jpeg' },
+  }, Buffer.alloc(10 * 1024 * 1024 + 1));
+
+  assert.equal(response.statusCode, 413);
+  assert.match(response.body, /<h1>Upload too large<\/h1>/);
+  assert.match(response.body, /no larger than 10 MiB/);
+  assert.match(response.body, /role="alert"/);
+});
+
 test('GET /integration returns TensorFlow Lite readiness page', async (t) => {
   await new Promise((resolve) => server.listen(0, resolve));
   t.after(() => server.close());

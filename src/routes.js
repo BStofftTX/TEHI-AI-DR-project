@@ -1,4 +1,4 @@
-import { summarizeUpload } from './utils/imageSummary.js';
+import { summarizeUpload, UploadTooLargeError, MAX_UPLOAD_BYTES } from './utils/imageSummary.js';
 import { runScreening } from './inference/screeningEngine.js';
 import { getModelIntegrationInfo } from './inference/modelRegistry.js';
 import { renderLandingPage } from './views/landingPage.js';
@@ -12,7 +12,22 @@ export async function handleRequest(req, res) {
   }
 
   if (req.method === 'POST' && req.url === '/screen') {
-    const imageSummary = await summarizeUpload(req);
+    let imageSummary;
+    try {
+      imageSummary = await summarizeUpload(req);
+    } catch (error) {
+      if (!(error instanceof UploadTooLargeError)) {
+        throw error;
+      }
+      return html(
+        res,
+        413,
+        renderErrorPage({
+          title: 'Upload too large',
+          message: `Choose an image no larger than ${MAX_UPLOAD_BYTES / (1024 * 1024)} MiB.`,
+        })
+      );
+    }
     if (!imageSummary.hasBody) {
       return html(
         res,
