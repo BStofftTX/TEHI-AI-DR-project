@@ -4,6 +4,7 @@ import { getModelIntegrationInfo } from './inference/modelRegistry.js';
 import { renderLandingPage } from './views/landingPage.js';
 import { renderResultPage } from './views/resultPage.js';
 import { renderIntegrationPage } from './views/integrationPage.js';
+import { renderErrorPage } from './views/errorPage.js';
 
 export async function handleRequest(req, res) {
   if (req.method === 'GET' && req.url === '/') {
@@ -12,6 +13,26 @@ export async function handleRequest(req, res) {
 
   if (req.method === 'POST' && req.url === '/screen') {
     const imageSummary = await summarizeUpload(req);
+    if (!imageSummary.hasBody) {
+      return html(
+        res,
+        400,
+        renderErrorPage({
+          title: 'Image required',
+          message: 'Choose a fundus image before running the prototype screening.',
+        })
+      );
+    }
+    if (!isSupportedUploadType(imageSummary.mimeType)) {
+      return html(
+        res,
+        415,
+        renderErrorPage({
+          title: 'Unsupported image type',
+          message: 'Upload an image file such as JPEG, PNG, or another supported image format.',
+        })
+      );
+    }
     const result = runScreening(imageSummary);
     return html(res, 200, renderResultPage(result));
   }
@@ -25,6 +46,10 @@ export async function handleRequest(req, res) {
     404,
     '<h1>Not found</h1><p>The requested TEHI MVP route does not exist.</p>'
   );
+}
+
+function isSupportedUploadType(mimeType) {
+  return mimeType === 'application/octet-stream' || mimeType.startsWith('image/');
 }
 
 function html(res, status, body) {
